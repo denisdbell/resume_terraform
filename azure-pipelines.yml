@@ -28,49 +28,13 @@ stages:
             displayName: Terraform Install
             inputs:
               terraformVersion: 'latest'
-          
-          - task: TerraformCLI@1
-            displayName: Terraform Init
+          - task: TerraformTaskV4@4
             inputs:
+              provider: 'azurerm'
               command: 'init'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-              backendType: 'azurerm'
-              backendServiceArm: '$(subscription)'
-              backendAzureRmResourceGroupName: '$(resourceGroup)'
-              backendAzureRmStorageAccountName: '$(storageAccount)'
-              backendAzureRmContainerName: '$(container)'
-              backendAzureRmKey: '$(tfstateFile)'
-              allowTelemetryCollection: false
-          
-          - task: TerraformCLI@1
-            displayName: Terraform Validate
-            inputs:
-              command: 'validate'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-              allowTelemetryCollection: true
-
- 
-  - stage: Plan
-    jobs:
-      - job: Plan
-        continueOnError: false
-        pool:
-          vmImage: Ubuntu-latest
-        steps:
-          - task: TerraformInstaller@1
-            displayName: Terraform Install
-            inputs:
-              terraformVersion: 'latest'
-
-          - task: TerraformCLI@1
-            displayName: Terraform Init
-            inputs:
-              command: 'init'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-              backendType: 'azurerm'
-              backendServiceArm: '$(subscription)'
-              backendAzureRmResourceGroupName: '$(resourceGroup)'
-              backendAzureRmStorageAccountName: '$(storageAccount)'
-              backendAzureRmContainerName: '$(container)'
-              backendAzureRmKey: '$(tfstateFile)'
-              allowTelemetryCollection: false
+              backendServiceArm: 'terraform-production'
+              backendAzureRmResourceGroupName: 'static-web-terraform'
+              backendAzureRmStorageAccountName: 'staccterraformresume'
+              backendAzureRmContainerName: 'tfstatefiles-iac'
+              backendAzureRmKey: 'iac-base.tfstate'
+         
