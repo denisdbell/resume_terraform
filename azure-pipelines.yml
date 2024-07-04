@@ -14,8 +14,7 @@ stages:
     jobs:
       - job: Validate
         continueOnError: false
-        pool:
-          vmImage: ubuntu-latest
+        pool: Default
         steps:
           - task: PublishPipelineArtifact@1
             displayName: Publish Artifacts
