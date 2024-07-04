@@ -7,6 +7,7 @@ terraform {
       # Azure Resource Manager 2.x (Base Azure RM Module)
       source  = "hashicorp/azurerm"
       version = "~> 3.0"
+      skip_provider_registration = true
     }
 
     # Azure Active Directory 1.x (required for AKS and Azure AD Integration)
