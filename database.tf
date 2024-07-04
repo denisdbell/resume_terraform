@@ -1,12 +1,12 @@
-resource "azurerm_resource_group" "example" {
-  name     = "api-rg-pro"
-  location = "West Europe"
+resource "azurerm_resource_group" "resume_postgres_rg" {
+  name     = "resume-postgres-rg"
+  location = "East US"
 }
 
-resource "azurerm_postgresql_server" "example" {
-  name                = "postgresql-server-1"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+resource "azurerm_postgresql_server" "resume_postgres" {
+  name                = "resume-postgresql-server"
+  location            = azurerm_resource_group.resume_postgres_rg.location
+  resource_group_name = azurerm_resource_group.resume_postgres_rg.name
 
   sku_name = "B_Gen5_2"
 
@@ -21,10 +21,10 @@ resource "azurerm_postgresql_server" "example" {
   ssl_enforcement_enabled      = true
 }
 
-resource "azurerm_postgresql_database" "example" {
-  name                = "exampledb"
-  resource_group_name = azurerm_resource_group.example.name
-  server_name         = azurerm_postgresql_server.example.name
+resource "azurerm_postgresql_database" "resume_visitor_count" {
+  name                = "resume_visitor_count"
+  resource_group_name = azurerm_resource_group.resume_postgres_rg.name
+  server_name         = azurerm_postgresql_server.resume_postgres.name
   charset             = "UTF8"
   collation           = "English_United States.1252"
 
