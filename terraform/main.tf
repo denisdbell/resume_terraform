@@ -33,4 +33,11 @@ provider "azurerm" {
   # v2.x azurerm requires "features" block
   features {
   }
+  subscription_id = "58e14b77-2bd2-4491-9dfe-479b96e2753d"
+  tenant_id       = "d26b81ae-0746-4c47-9c77-bfc394f26871"
+}
+
+# Create Random pet resource
+resource "random_pet" "aksrandom" {
+
 }
