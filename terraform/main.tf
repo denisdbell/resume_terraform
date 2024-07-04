@@ -7,7 +7,6 @@ terraform {
       # Azure Resource Manager 2.x (Base Azure RM Module)
       source  = "hashicorp/azurerm"
       version = "~> 3.0"
-      skip_provider_registration = true
     }
 
     # Azure Active Directory 1.x (required for AKS and Azure AD Integration)
@@ -34,8 +33,7 @@ provider "azurerm" {
   # v2.x azurerm requires "features" block
   features {
   }
-  subscription_id = "58e14b77-2bd2-4491-9dfe-479b96e2753d"
-  tenant_id       = "d26b81ae-0746-4c47-9c77-bfc394f26871"
+  skip_provider_registration = true
 }
 
 # Create Random pet resource
