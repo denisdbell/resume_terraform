@@ -36,4 +36,11 @@ stages:
               backendAzureRmStorageAccountName: 'staccterraformresume'
               backendAzureRmContainerName: 'tfstatefiles-iac'
               backendAzureRmKey: 'iac-base.tfstate'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'              
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+              environmentServiceNameAzureRM: 'terraform-production'
          
