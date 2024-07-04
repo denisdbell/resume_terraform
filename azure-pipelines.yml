@@ -1,0 +1,76 @@
+trigger:
+- main
+- feature/*
+
+variables:
+  subscription: terraform-production
+  resourceGroup: static-web-terraform
+  storageAccount: staccterraformresume
+  container: tfstatefiles-iac
+  tfstateFile: iac-base.tfstate
+
+stages:
+  - stage: Validate
+    jobs:
+      - job: Validate
+        continueOnError: false
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: PublishPipelineArtifact@1
+            displayName: Publish Artifacts
+            inputs:
+              targetPath: '$(System.DefaultWorkingDirectory)/terraform'
+              artifact: 'terraform-out'
+              publishLocation: 'pipeline'
+          
+          - task: TerraformInstaller@1
+            displayName: Terraform Install
+            inputs:
+              terraformVersion: 'latest'
+          
+          - task: TerraformCLI@1
+            displayName: Terraform Init
+            inputs:
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+              backendType: 'azurerm'
+              backendServiceArm: '$(subscription)'
+              backendAzureRmResourceGroupName: '$(resourceGroup)'
+              backendAzureRmStorageAccountName: '$(storageAccount)'
+              backendAzureRmContainerName: '$(container)'
+              backendAzureRmKey: '$(tfstateFile)'
+              allowTelemetryCollection: false
+          
+          - task: TerraformCLI@1
+            displayName: Terraform Validate
+            inputs:
+              command: 'validate'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+              allowTelemetryCollection: true
+
+ 
+  - stage: Plan
+    jobs:
+      - job: Plan
+        continueOnError: false
+        pool:
+          vmImage: Ubuntu-latest
+        steps:
+          - task: TerraformInstaller@1
+            displayName: Terraform Install
+            inputs:
+              terraformVersion: 'latest'
+
+          - task: TerraformCLI@1
+            displayName: Terraform Init
+            inputs:
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+              backendType: 'azurerm'
+              backendServiceArm: '$(subscription)'
+              backendAzureRmResourceGroupName: '$(resourceGroup)'
+              backendAzureRmStorageAccountName: '$(storageAccount)'
+              backendAzureRmContainerName: '$(container)'
+              backendAzureRmKey: '$(tfstateFile)'
+              allowTelemetryCollection: false
