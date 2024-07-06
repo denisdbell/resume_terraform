@@ -1,8 +1,3 @@
-resource "azurerm_resource_group" "resume_postgres_rg" {
-  name     = "resume-postgres-rg"
-  location = "East US"
-}
-
 resource "azurerm_postgresql_server" "resume_postgres" {
   name                = "resume-postgresql-server"
   location            = azurerm_resource_group.resume_postgres_rg.location
