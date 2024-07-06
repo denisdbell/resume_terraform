@@ -2,7 +2,7 @@ data "azurerm_client_config" "current" {
 }
 
 resource "azurerm_key_vault" "resume_key_vault" {
-  name                        = "key_vault_resume"
+  name                        = "key-vault-resume"
   location                    = azurerm_resource_group.resume_keyvault_rg.location
   resource_group_name         = azurerm_resource_group.resume_keyvault_rg.name
   enabled_for_disk_encryption = true
