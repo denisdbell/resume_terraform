@@ -44,4 +44,10 @@ stages:
               command: 'plan'
               workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
               environmentServiceNameAzureRM: 'terraform-production'
-         
+          - task: TerraformTaskV4@4
+            displayName: Terraform Plan
+            inputs:
+             provider: 'azurerm'
+             command: 'apply'
+             workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+             environmentServiceNameAzureRM: 'terraform-production'
