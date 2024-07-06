@@ -1,3 +1,5 @@
+data "azurerm_client_config" "current" {
+}
 
 resource "azurerm_key_vault" "resume_key_vault" {
   name                        = "key_vault_resume"
@@ -11,6 +13,8 @@ resource "azurerm_key_vault" "resume_key_vault" {
   sku_name = "standard"
 
   access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.object_id
 
     key_permissions = [
       "Get",
