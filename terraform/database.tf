@@ -1,4 +1,4 @@
-resource "azurerm_postgresql_server" "resume_postgres" {
+/*resource "azurerm_postgresql_server" "resume_postgres" {
   name                = "resume-postgresql-server"
   location            = azurerm_resource_group.resume_postgres_rg.location
   resource_group_name = azurerm_resource_group.resume_postgres_rg.name
@@ -27,4 +27,4 @@ resource "azurerm_postgresql_database" "resume_visitor_count" {
   lifecycle {
     prevent_destroy = true
   }
-}
+}*/
